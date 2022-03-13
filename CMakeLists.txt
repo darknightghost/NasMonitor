@@ -7,6 +7,12 @@ cmake_policy(SET CMP0054 NEW)
 # Project
 project (NasMonitor C CXX)
 
+set (CMAKE_PROJECT_VERSION_MAJOR        0)
+set (CMAKE_PROJECT_VERSION_MINOR        1)
+set (CMAKE_PROJECT_VERSION_PATCH        0)
+
+include (CPackComponent)
+
 # Environment.
 list (APPEND    CMAKE_MODULE_PATH       "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include (env)
@@ -23,3 +29,12 @@ include (NasStatusBoard)
 #   
 #endif ()
 
+# Pack.
+set (CPACK_PACKAGE_NAME         "NasMonitor")
+set (CPACK_PACKAGE_DESCRIPTION  "Nas monitor.")
+set (CPACK_PACKAGE_CONTACT      "wangsiyuan <darknightghost.cn@gmail.com>")
+
+list (APPEND    CMAKE_MODULE_PATH       "${CMAKE_CURRENT_SOURCE_DIR}/cpack")
+include (arch)
+include (deb)
+include (CPack)

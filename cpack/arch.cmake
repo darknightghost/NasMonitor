@@ -1,1 +1,2 @@
- 
+#list (APPEND    CPACK_GENERATOR     "CYGWIN")
+

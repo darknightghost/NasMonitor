@@ -41,13 +41,15 @@ add_custom_command (
             ${${TARGET_PREFIX}_RESOURCES} 
     DEPENDS ${${TARGET_PREFIX}_RESOURCES} 
             "${GENERATE_RESOURCE_SCRIPT}"
+            "${CMAKE_CURRENT_SOURCE_DIR}/CHANGELOG"
     )
 
 qt5_add_resources (${TARGET_PREFIX}_WRAPPED_RESOURCES
     "${${TARGET_PREFIX}_RESOURCE_LIST_FILE}"
     )
 
-add_executable(${${TARGET_PREFIX}_TARGET}
+# Target.
+add_executable (${${TARGET_PREFIX}_TARGET}
     ${${TARGET_PREFIX}_SRC}
     ${${TARGET_PREFIX}_WRAPPED_RESOURCES}
     ${${TARGET_PREFIX}_WRAPPED_HEADERS}
@@ -63,5 +65,32 @@ target_link_libraries(${${TARGET_PREFIX}_TARGET}
     ${OPENSSL_SSL_LIBRARY}
     ${OPENSSL_CRYPTO_LIBRARY}
     )
+
+# Install.
+set (${TARGET_PREFIX}_COMPONENT     "${TARGET_PREFIX}")
+
+cpack_add_component ("${${TARGET_PREFIX}_COMPONENT}"
+    DESCRIPTION     "GUI of the nas monitor."
+    )
+list (APPEND    CPACK_COMPONENTS_ALL    "${${TARGET_PREFIX}_COMPONENT}")  
+
+# Install targets.
+install (TARGETS    "${${TARGET_PREFIX}_TARGET}"
+    COMPONENT       "${${TARGET_PREFIX}_COMPONENT}"
+    DESTINATION     bin
+    )
+
+# Install configs.
+file (GLOB_RECURSE ${TARGET_PREFIX}_CONFIGS
+    RELATIVE    "${CMAKE_CURRENT_SOURCE_DIR}/config"
+    "${CMAKE_CURRENT_SOURCE_DIR}/config/NasStatusBoard/*"
+    )
+foreach (name IN LISTS ${TARGET_PREFIX}_CONFIGS)
+    install (FILES      "${CMAKE_CURRENT_SOURCE_DIR}/config/${name}"
+        COMPONENT       "${${TARGET_PREFIX}_COMPONENT}"
+        DESTINATION     "/etc/NasMonitor"
+        )
+
+endforeach ()
 
 unset (TARGET_PREFIX)

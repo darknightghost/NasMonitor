@@ -13,6 +13,7 @@ add_executable (${${TARGET_PREFIX}_TARGET}
     )
 
 target_link_libraries(${${TARGET_PREFIX}_TARGET}
+    ${YAML_CPP_LIBRARIES}
     ${Boost_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSL_SSL_LIBRARY}

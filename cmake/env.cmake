@@ -123,12 +123,15 @@ if (NOT DOXYGEN_EXECUTABLE)
     
 endif()
 
-find_package(Boost      1.35.0  REQUIRED 
+find_package (Boost      1.35.0  REQUIRED 
     COMPONENTS container 
 )
 
 include_directories (${Boost_INCLUDE_DIR})
 link_directories( ${Boost_LIBRARY_DIR})
+
+find_package (yaml-cpp  REQUIRED)
+include_directories (${YAML_CPP_INCLUDE_DIR})
 
 set (GENERATE_RESOURCE_SCRIPT   "${CMAKE_CURRENT_SOURCE_DIR}/generate_resources.py")
 set (GENERATE_RESOURCE_CMD      "${PYTHON_EXECUTABLE}" "${GENERATE_RESOURCE_SCRIPT}")

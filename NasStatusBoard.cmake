@@ -60,6 +60,7 @@ target_link_libraries(${${TARGET_PREFIX}_TARGET}
     Qt5::Widgets
     Qt5::Network
     Qt5::Xml
+    ${YAML_CPP_LIBRARIES}
     ${Boost_LIBRARIES}
     ${OPENSSL_LIBRARIES}
     ${OPENSSL_SSL_LIBRARY}
